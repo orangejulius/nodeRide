@@ -2,8 +2,9 @@ var parser = require('xml2json');
 var fs = require('fs');
 var redis = require('redis');
 var client = redis.createClient();
+var filename = '2012-03-10-16-53-22.tcx'
 
-fs.readFile('2012-03-10-16-53-22.tcx', 'ascii', function(err, data){
+fs.readFile(filename, 'ascii', function(err, data){
 	if(err) {
 		console.error("Could not open file: %s", err);
 		process.exit(1);
@@ -19,7 +20,7 @@ fs.readFile('2012-03-10-16-53-22.tcx', 'ascii', function(err, data){
 	trackPoint.forEach(function(val, index) {
 		console.log(val);
 		//console.log(val.AltitudeMeters);
-		client.hmset(point.toString(), val);
+		client.hmset(filename + '-' + point.toString(), val);
 		point++;
 	});
 });
