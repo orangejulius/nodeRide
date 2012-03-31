@@ -4,3 +4,7 @@ p Welcome to #{title}
 p key data is #{data}
 each val, key in data
   li #{key}: #{val}
+
+form(action='/upload', enctype='multipart/form-data', method='post')
+  input(type='file', name='upload', multiple='multiple')
+  input(type='submit')

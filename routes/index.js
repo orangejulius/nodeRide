@@ -1,3 +1,4 @@
+exports.upload = require('./upload').index;
 
 /*
  * GET home page.
