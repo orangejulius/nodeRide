@@ -1,10 +1,11 @@
 h1= title
 p Welcome to #{title}
 
-p key data is #{data}
+h2 existing rides
 each val, key in data
   li #{key}: #{val}
 
+h2 upload new ride
 form(action='/upload', enctype='multipart/form-data', method='post')
   input(type='file', name='upload', multiple='multiple')
   input(type='submit')
