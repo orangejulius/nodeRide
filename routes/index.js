@@ -1,5 +1,6 @@
 exports.upload = require('./upload').index;
 exports.flush = require('./flush').index;
+exports.view = require('./view').index;
 
 /*
  * GET home page.
