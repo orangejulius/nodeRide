@@ -1,4 +1,5 @@
 exports.upload = require('./upload').index;
+exports.flush = require('./flush').index;
 
 /*
  * GET home page.

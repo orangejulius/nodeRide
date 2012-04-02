@@ -31,6 +31,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.post('/upload', routes.upload);
+app.get('/flush', routes.flush);
 
 var port = process.env.PORT || 3000;
 app.listen(port);
