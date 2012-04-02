@@ -113,7 +113,9 @@ exports.index = function(fileName, callback) {
 			});
 
 			console.log(key);
-			redis.hmset(key.id.toString(), key);
+			var string = JSON.stringify(key);
+			console.log("storing stringified JSON with length "+string.length);
+			redis.set(key.id.toString(),string);
 		});
 		callback(true);
 	});
