@@ -1,7 +1,32 @@
+var dummyObj = {};
+
+var returnNull = function() {
+	return null;
+}
+
+dummyObj.get = dummyObj.find = dummyObj.text = returnNull;
+
+function getNode(element, name) {
+	if (element)
+		var newElem = element.get('./*[local-name() = \''+name+'\']');
+		if (newElem)
+			return newElem;
+	return dummyObj;
+}
+
+function findNode(element, name) {
+	if (element)
+		var newElem = element.find('./*[local-name() = \''+name+'\']');
+		if (newElem)
+			return newElem;
+	return dummyObj;
+}
+
 exports.index = function(fileName, callback) {
-	var parser = require('xml2json');
+	var libxmljs = require('libxmljs');
 	var redis = require('./redis.js').index;
 	var fs = require('fs');
+	var tcxNs='http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2'
 
 	fs.readFile(fileName, 'ascii', function(err, data){
 		if(err) {
@@ -9,72 +34,87 @@ exports.index = function(fileName, callback) {
 			process.exit(1);
 		}
 
-		var object = parser.toJson(data, {object: true});
-		var activity = object.TrainingCenterDatabase.Activities.Activity;
-		var key = new Object();
-		key.id = activity.Id;
-		//console.log(activity);
-		key.laps = new Array();
-		console.log("Lap size: "+activity.Lap.length);
-		var tempArray = new Array();
-		if (activity.Lap.size > 1) {
-			activity.Lap.forEach(function(lap, index) {
-				tempArray.push(lap);
+		console.log(data.length);
+		var xmldoc = libxmljs.parseXmlString(data);
+
+		var ns = xmldoc.root().namespace();
+		console.log("root node ns href: "+ns.href());
+		console.log("root node name: "+xmldoc.root().name());
+
+		var activitiesNode = xmldoc.root().find('//*[local-name() = \'Activity\']', tcxNs);
+		console.log(activitiesNode);
+		activitiesNode.forEach(function(activityNode) {
+			//debug section printing xml structure
+			console.log("Activity node children: ");
+			activityNode.childNodes().forEach(function (val, index) {
+				console.log("-"+val.name());
 			});
-		} else {
-			tempArray.push(activity.Lap);
-		}
-		tempArray.forEach(function(lap, index) {
-			//console.log("printing lap "+index);
-			var lapObject = new Object();
-			lapObject.distance = lap.DistanceMeters;
-			lapObject.time = lap.TotalTimeSeconds;
-			lapObject.calories = lap.Calories;
-			console.log("printing lap");
-			console.log(lap);
-			//var track0 = lap.Track;
-			lapObject.trackpoints = [];
-			lap.Track.forEach(function(trackpoint, index) {
-				console.log("printing Track child");
-				//console.log(trackpoint);
-				console.log("Printing Trackpoint");
-				//console.log(trackpoint.Trackpoint);
-				var tempTrackpointArray = [];
-				console.log("Trackpoint size is "+trackpoint.Trackpoint.size);
-				if (trackpoint.Trackpoint.size > 1) {
-					trackpoint.Trackpoint.foreach(function(trackpointItem) {
-						tempTrackpointArray.push(trackpointItem);
+
+			var lapNode = getNode(activityNode, 'Lap');
+			console.log("Lap node children");
+			lapNode.childNodes().forEach(function(val, index) {
+				console.log("-"+val.name());
+			});
+
+
+			var trackNode = getNode(lapNode, 'Track');
+			console.log("Track node children");
+			trackNode.childNodes().forEach(function(val) {
+				console.log("-"+val.name());
+			});
+
+			var trackpoint = trackNode.childNodes()[0];
+			console.log("Trackpoint node children");
+			trackpoint.childNodes().forEach(function(val) {
+				console.log('-'+val.name());
+			});
+			//end debug printing
+
+			var key = {};
+			key.laps = [];
+			key.id = getNode(activityNode, 'Id').text();
+			findNode(activityNode, 'Lap').forEach(function(lapNode) {
+				var lap = {};
+				lap.tracks = []
+
+				lap.time = getNode(lapNode, 'TotalTimeSeconds').text();
+				lap.dist = getNode(lapNode, 'DistanceMeters').text();
+				lap.calories = getNode(lapNode, 'Calories').text();
+				lap.cadence = getNode(lapNode, 'Cadence').text();
+
+				findNode(lapNode, 'Track').forEach(function(trackNode) {
+					var track = [];
+
+					findNode(trackNode, 'Trackpoint').forEach(function(trackpointNode) {
+						var trackpoint = {};
+
+						trackpoint.time = getNode(trackpointNode, 'Time').text();
+
+						var position = getNode(trackpointNode, 'Position');
+						trackpoint.lat = getNode(position, 'LatitudeDegrees').text();
+						trackpoint.lon = getNode(position, 'LongitudeDegrees').text();
+
+						trackpoint.alt = getNode(trackpointNode, 'AltitudeMeters').text();
+						trackpoint.dist = getNode(trackpointNode, 'DistanceMeters').text();
+						trackpoint.cadence = getNode(trackpointNode, 'Cadence').text();
+
+						var extensions = getNode(trackpointNode, 'Extensions');
+						var tpx = getNode(extensions, 'TPX');
+						trackpoint.power = getNode(tpx, 'Watts').text();
+
+						console.log(trackpoint);
+						track.push(trackpoint);
 					});
-				} else {
-					tempTrackpointArray.push(trackpoint.Trackpoint);
-				}
-				tempTrackpointArray.forEach(function(trackpoint, index) {
-					var point = {};
-					point.time = trackpoint.Time;
-					if (trackpoint.Position) {
-						point.lat = trackpoint.Position.LatitudeDegrees;
-						point.lon = trackpoint.Position.LongitudeDegrees;
-					}
-					point.alt = trackpoint.AltitudeMeters;
-					point.dist = trackpoint.DistanceMeters;
-					console.log(point);
-					console.log(trackpoint);
-					lapObject.trackpoints.push(point);
-					});
+					lap.tracks.push(track);
 				});
-			key.laps.push(lapObject);
 
+				console.log(lap)
+				key.laps.push(lap);
+			});
+
+			console.log(key);
+			redis.hmset(key.id.toString(), key);
 		});
-		redis.hmset(key.id.toString(), key);
 		callback(true);
-		/*
-
-		var pointNum = 0;
-		track0.Trackpoint.forEach(function(val, index) {
-			pointNum++;
-		});
-		redis.hmset(key.id.toString(), point);
-		console.log("set key eta-"+key.id);
-		*/
 	});
 };
