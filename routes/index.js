@@ -5,7 +5,7 @@ exports.upload = require('./upload').index;
  */
 exports.index = function(req, res){
 	var redis = require('../core/redis.js').index;
-	redis.keys('meta-*', function(err, result) {
+	redis.keys('*', function(err, result) {
 		if (err) {
 			console.log("Error: "+err);
 		} else {

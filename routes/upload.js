@@ -14,5 +14,7 @@ exports.index = function(req, res){
 	  , req.files.upload.size / 1024 | 0
 	  , req.files.upload.path
 	  , req.body.title));
-	readTCX(req.files.upload.path);
+	readTCX(req.files.upload.path, function(result) {
+		console.log("readTCX result: "+result);
+	});
 };
