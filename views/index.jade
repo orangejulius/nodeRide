@@ -3,7 +3,8 @@ p Welcome to #{title}
 
 h2 existing rides
 each val, key in data
-  li #{key}: #{val}
+  li
+    a(href='/view/#{val}') #{val}
 
 h2 upload new ride
 form(action='/upload', enctype='multipart/form-data', method='post')
