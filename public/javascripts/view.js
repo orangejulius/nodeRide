@@ -31,7 +31,7 @@ function initialize() {
 	var myOptions = {
 		center: center,
 		zoom: 8,
-		mapTypeId: google.maps.MapTypeId.ROADMAP
+		mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
 	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
