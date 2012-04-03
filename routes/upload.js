@@ -1,4 +1,5 @@
 var readTCX = require('../core/readTCX.js').index;
+var logule = require('logule');
 
 exports.index = function(req, res){
 	var format = require('util').format;
@@ -15,6 +16,6 @@ exports.index = function(req, res){
 	  , req.files.upload.path
 	  , req.body.title));
 	readTCX(req.files.upload.path, function(result) {
-		console.log("readTCX result: "+result);
+		logule.info("result for upload of file "+req.files.upload.name + ": "+result);
 	});
 };
