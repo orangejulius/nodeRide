@@ -1,3 +1,4 @@
+var logule = require('logule');
 var dummyObj = {};
 
 var returnNull = function() {
@@ -34,39 +35,36 @@ exports.index = function(fileName, callback) {
 			process.exit(1);
 		}
 
-		console.log(data.length);
+		logule.debug("input data length: "+data.length);
 		var xmldoc = libxmljs.parseXmlString(data);
 
 		var ns = xmldoc.root().namespace();
-		console.log("root node ns href: "+ns.href());
-		console.log("root node name: "+xmldoc.root().name());
 
 		var activitiesNode = xmldoc.root().find('//*[local-name() = \'Activity\']', tcxNs);
-		console.log(activitiesNode);
 		activitiesNode.forEach(function(activityNode) {
 			//debug section printing xml structure
-			console.log("Activity node children: ");
+			logule.debug("Activity node children: ");
 			activityNode.childNodes().forEach(function (val, index) {
-				console.log("-"+val.name());
+				logule.debug("-"+val.name());
 			});
 
 			var lapNode = getNode(activityNode, 'Lap');
-			console.log("Lap node children");
+			logule.debug("Lap node children");
 			lapNode.childNodes().forEach(function(val, index) {
-				console.log("-"+val.name());
+				logule.debug("-"+val.name());
 			});
 
 
 			var trackNode = getNode(lapNode, 'Track');
-			console.log("Track node children");
+			logule.debug("Track node children");
 			trackNode.childNodes().forEach(function(val) {
-				console.log("-"+val.name());
+				logule.debug("-"+val.name());
 			});
 
 			var trackpoint = trackNode.childNodes()[0];
-			console.log("Trackpoint node children");
+			logule.debug("Trackpoint node children");
 			trackpoint.childNodes().forEach(function(val) {
-				console.log('-'+val.name());
+				logule.debug('-'+val.name());
 			});
 			//end debug printing
 
@@ -102,19 +100,19 @@ exports.index = function(fileName, callback) {
 						var tpx = getNode(extensions, 'TPX');
 						trackpoint.power = getNode(tpx, 'Watts').text();
 
-						console.log(trackpoint);
+						logule.debug(trackpoint);
 						track.push(trackpoint);
 					});
 					lap.tracks.push(track);
 				});
 
-				console.log(lap)
+				logule.debug(lap)
 				key.laps.push(lap);
 			});
 
-			console.log(key);
+			logule.debug(key);
 			var string = JSON.stringify(key);
-			console.log("storing stringified JSON with length "+string.length);
+			logule.debug("storing stringified JSON with length "+string.length);
 			redis.set(key.id.toString(),string);
 		});
 		callback(true);
