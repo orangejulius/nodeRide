@@ -2,6 +2,7 @@ exports.upload = require('./upload').index;
 exports.flush = require('./flush').index;
 exports.view = require('./view').index;
 
+var logule = require('logule');
 /*
  * GET home page.
  */
@@ -11,7 +12,7 @@ exports.index = function(req, res){
 		if (err) {
 			console.log("Error: "+err);
 		} else {
-			console.log(result);
+			logule.debug(result);
 			res.render('index', { title: 'NodeRide', data: result})
 		}
 	});
