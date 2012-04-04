@@ -1,7 +1,7 @@
-var readTCX = require('../core/readTCX.js').index;
+var readTCX = require('../core/readTCX.js');
 var logule = require('logule');
 
-exports.index = function(req, res){
+module.exports = function(req, res){
 	var format = require('util').format;
 	//req.files.complete(function(err, fields, files) {
 	//	if (err) {

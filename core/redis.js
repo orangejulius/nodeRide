@@ -4,4 +4,4 @@ if (process.env.REDISTOGO_URL) {
 	var redis = require('redis').createClient();
 }
 
-exports.index = redis;
+module.exports = redis;

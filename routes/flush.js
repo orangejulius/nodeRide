@@ -1,6 +1,6 @@
-var redis = require('../core/redis.js').index;
+var redis = require('../core/redis.js');
 
-exports.index = function(req, res) {
+module.exports = function(req, res) {
 	redis.flushdb(function(result) {
 		console.log("flushed redis db");
 		res.redirect('/');

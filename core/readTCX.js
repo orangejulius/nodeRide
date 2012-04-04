@@ -23,9 +23,9 @@ function findNode(element, name) {
 	return dummyObj;
 }
 
-exports.index = function(fileName, callback) {
+module.exports = function(fileName, callback) {
 	var libxmljs = require('libxmljs');
-	var redis = require('./redis.js').index;
+	var redis = require('./redis.js');
 	var fs = require('fs');
 	var tcxNs='http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2'
 
