@@ -1,11 +1,13 @@
 !!! 5
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body!= body
-  .navbar.navbar-fixed-top
-    .navbar-inner
-      .container-fluid
-        a.brand(href='#') NodeRide
+  block head
+    head
+      title= title
+      link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+      link(rel='stylesheet', href='/stylesheets/style.css')
+  block body
+    body
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          a.brand(href='#') NodeRide

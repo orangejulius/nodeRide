@@ -1,12 +1,15 @@
-h1= title
-p Welcome to #{title}
+extends layout
 
-h2 existing rides
-each val, key in data
-  li
-    a(href='/view/#{val}') #{val}
+append body
+  h1= title
+  p Welcome to #{title}
 
-h2 upload new ride
-form(action='/upload', enctype='multipart/form-data', method='post')
-  input(type='file', name='upload', multiple='multiple')
-  input(type='submit')
+  h2 existing rides
+  each val, key in data
+    li
+      a(href='/view/#{val}') #{val}
+
+  h2 upload new ride
+  form(action='/upload', enctype='multipart/form-data', method='post')
+    input(type='file', name='upload', multiple='multiple')
+    input(type='submit')
