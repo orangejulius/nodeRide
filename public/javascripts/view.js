@@ -1,8 +1,4 @@
-var hello = 'hello';
-console.log(data);
-console.log(typeof data);
 data = JSON.parse(data);
-console.log(typeof data);
 
 function isValidCoord(value) {
 	if (value == 0)
