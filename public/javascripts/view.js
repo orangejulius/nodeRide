@@ -11,6 +11,7 @@ function isValidCoord(value) {
 		return false;
 	return true;
 }
+
 function initialize() {
 
 	var center = null;
