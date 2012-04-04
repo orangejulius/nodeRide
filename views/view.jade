@@ -2,7 +2,8 @@ script(type='text/javascript',src="http://maps.googleapis.com/maps/api/js?key=AI
 script
   var data = !{JSON.stringify(data)};
 script(src='/javascripts/view.js')
-body(onload='initialize()')
+script
+  window.onload = initialize;
 h1 Ride #{id}
 div(id="map_canvas",style="width:800px; height:600px")
 
