@@ -9,17 +9,12 @@ function isValidCoord(value) {
 }
 
 function initialize() {
-
-	var center = null;
-
 	var pathCoordinates = [];
 	var bounds = new google.maps.LatLngBounds();
 	data.laps.forEach(function(lap) {
 		lap.tracks.forEach(function(track) {
 			track.forEach(function(trackpoint) {
 				var newLatLng = new google.maps.LatLng(trackpoint.lat, trackpoint.lon);
-				if (!center)
-					center = newLatLng;
 				if (isValidCoord(trackpoint.lat) && isValidCoord(trackpoint.lon)) {
 					pathCoordinates.push(newLatLng);
 					bounds.extend(newLatLng);
@@ -29,8 +24,6 @@ function initialize() {
 	});
 
 	var myOptions = {
-		center: center,
-		zoom: 8,
 		mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
 	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
