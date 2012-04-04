@@ -8,7 +8,8 @@ append head
   script
     window.onload = initialize;
 
-append body
-  h1 Ride #{id}
-  div(id="map_canvas",style="width:800px; height:600px")
+append content
+  .hero-unit
+    h2 Ride #{id}
+    div(id="map_canvas",style="width:100%; height:600px")
 

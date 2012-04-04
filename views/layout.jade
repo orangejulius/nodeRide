@@ -5,9 +5,16 @@ html
       title= title
       link(rel='stylesheet', href='/stylesheets/bootstrap.css')
       link(rel='stylesheet', href='/stylesheets/style.css')
-  block body
-    body
+
+  body
     .navbar.navbar-fixed-top
       .navbar-inner
         .container-fluid
           a.brand(href='#') NodeRide
+    .container-fluid
+      .row-fluid
+        .span3
+          .well.sidebar-nav
+             block sidebar
+        .span9
+          block content

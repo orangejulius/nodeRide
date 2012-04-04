@@ -1,12 +1,15 @@
 extends layout
 
-append body
-  h2 existing rides
-  each val, key in data
-    li
-      a(href='/view/#{val}') #{val}
+append sidebar
+  ul.nav.nav-list
+    li.nav-header existing rides
+      each val, key in data
+        li#val
+          a(href='/view/#{val}') #{val}
 
-  h2 upload new ride
-  form(action='/upload', enctype='multipart/form-data', method='post')
-    input(type='file', name='upload', multiple='multiple')
-    input(type='submit')
+append content
+  .hero-unit
+    h2 upload new ride
+    form(action='/upload', enctype='multipart/form-data', method='post')
+      input(type='file', name='upload', multiple='multiple')
+      input(type='submit')
