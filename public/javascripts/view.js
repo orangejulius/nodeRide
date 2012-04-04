@@ -7,6 +7,12 @@ function isValidCoord(value) {
 }
 
 function initialize() {
+	$.getJSON('/get/rideList', function(data) {
+		$.each(data, function(i,item) {
+			$("<li><a href=\"/view/"+item+"\">"+item+"</a></li>").appendTo('#rideList');
+		});
+	});
+
 	if (typeof data == "string") {
 		data = JSON.parse(data);
 		var pathCoordinates = [];

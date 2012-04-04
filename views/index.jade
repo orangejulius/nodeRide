@@ -1,11 +1,9 @@
 extends layout
 
-append sidebar
-  ul.nav.nav-list
-    li.nav-header existing rides
-      each val, key in data
-        li#val
-          a(href='/view/#{val}') #{val}
+append head
+  script(src='/javascripts/view.js')
+  script
+    window.onload = initialize;
 
 append content
   .hero-unit
