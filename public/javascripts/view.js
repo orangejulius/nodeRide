@@ -63,3 +63,5 @@ function initialize() {
 
 	onHashChange();
 }
+
+$(initialize);
