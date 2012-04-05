@@ -33,7 +33,7 @@ app.configure('production', function(){
 app.get('/', routes.index);
 app.post('/upload', routes.upload);
 app.get('/flush', routes.flush);
-app.get('/view/:id', routes.view);
+app.get('/view/', routes.view);
 app.get('/get/rideList', routes.get.rideList);
 app.get('/get/ride/:id', routes.get.ride);
 

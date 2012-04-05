@@ -12,7 +12,7 @@ function isValidCoord(value) {
 function updateRideList() {
 	$.getJSON('/get/rideList', function(data) {
 		$.each(data, function(i,item) {
-			$("<li><a href=\"/view/"+item+"#"+item+"\">"+item+"</a></li>").appendTo('#rideList');
+			$("<li><a href=\"/view/#"+item+"\">"+item+"</a></li>").appendTo('#rideList');
 		});
 	});
 }
