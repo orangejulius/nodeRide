@@ -49,6 +49,8 @@ function onHashChange() {
 	updateRide(rideId);
 }
 
+$(window).bind('hashchange', onHashChange);
+
 function initialize() {
 	updateRideList();
 
