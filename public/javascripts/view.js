@@ -43,6 +43,9 @@ function updateRide(rideId) {
 function onHashChange() {
 	var rideId = location.hash.substring(1);
 
+	document.title = "NodeRide - Viewing Ride "+rideId;
+	$('#ride-name').text("Ride "+rideId);
+
 	updateRide(rideId);
 }
 
