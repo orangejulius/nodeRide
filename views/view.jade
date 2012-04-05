@@ -2,8 +2,6 @@ extends layout
 
 append head
   script(type='text/javascript',src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAeqI73a3DM_E8eNUsWWR9tmFw2BmPLTjo&sensor=false")
-  script
-    var data = !{JSON.stringify(data)};
   script(src='/javascripts/view.js')
   script
     window.onload = initialize;
