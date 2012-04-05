@@ -8,6 +8,7 @@ exports.rideList = function(req, res){
 			logule.error("Error getting ride ids: "+err);
 		} else {
 			logule.debug(result);
+			res.header('Content-Type', 'application/json');
 			res.send(result);
 		}
 	});
@@ -20,6 +21,7 @@ exports.ride = function(req, res){
 			logule.error("Error getting ride with id "+req.params.id+": "+err);
 		} else {
 			logule.debug(result);
+			res.header('Content-Type', 'application/json');
 			res.send(result);
 		}
 	});
