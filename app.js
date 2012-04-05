@@ -5,15 +5,26 @@
 
 var express = require('express')
   , routes = require('./routes');
+var connect = require('connect');
 
 var app = module.exports = express.createServer();
 
 // Configuration
 
+//function to filter which responses have compression enabled
+//currently only enabled for json and html
+var filter = function(req, res) {
+	if (!process.env.ENABLE_COMPRESSION)
+		return false;
+	var type = res.getHeader('Content-Type') || '';
+	return type.match(/json|html/) != null;
+};
+
 app.configure(function(){
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
   app.set('view options', { layout: false});
+  app.use(connect.compress({filter: filter}));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
