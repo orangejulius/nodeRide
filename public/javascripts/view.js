@@ -18,8 +18,9 @@ function initialize() {
 	};
 	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-	if (typeof data == "string") {
-		data = JSON.parse(data);
+	var rideId = location.hash.substring(1);
+
+	$.getJSON('/get/ride/'+rideId, function(data) {
 		var pathCoordinates = [];
 		var bounds = new google.maps.LatLngBounds();
 		data.laps.forEach(function(lap) {
@@ -43,5 +44,5 @@ function initialize() {
 
 		flightPath.setMap(map);
 		map.fitBounds(bounds);
-	}
+	});
 }
