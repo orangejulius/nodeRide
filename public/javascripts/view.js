@@ -13,6 +13,11 @@ function initialize() {
 		});
 	});
 
+	var myOptions = {
+		mapTypeId: google.maps.MapTypeId.TERRAIN
+	};
+	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
 	if (typeof data == "string") {
 		data = JSON.parse(data);
 		var pathCoordinates = [];
@@ -28,11 +33,6 @@ function initialize() {
 				});
 			});
 		});
-
-		var myOptions = {
-			mapTypeId: google.maps.MapTypeId.TERRAIN
-		};
-		var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
 		var flightPath = new google.maps.Polyline({
 			path: pathCoordinates,
