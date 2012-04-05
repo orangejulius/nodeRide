@@ -17,16 +17,7 @@ function updateRideList() {
 	});
 }
 
-function initialize() {
-	updateRideList();
-
-	var myOptions = {
-		mapTypeId: google.maps.MapTypeId.TERRAIN
-	};
-	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-	var rideId = location.hash.substring(1);
-
+function updateRide(rideId) {
 	$.getJSON('/get/ride/'+rideId, function(data) {
 		var pathCoordinates = [];
 		var bounds = new google.maps.LatLngBounds();
@@ -42,14 +33,28 @@ function initialize() {
 			});
 		});
 
-		flightPath = new google.maps.Polyline({
-			path: pathCoordinates,
-			strokeColor: "#FF0000",
-			strokeOpacity: 1.0,
-			strokeWeight: 2
-		});
+		flightPath.setPath(pathCoordinates);
 
 		flightPath.setMap(map);
 		map.fitBounds(bounds);
 	});
+}
+
+function onHashChange() {
+	var rideId = location.hash.substring(1);
+
+	updateRide(rideId);
+}
+
+function initialize() {
+	updateRideList();
+
+	var myOptions = {
+		mapTypeId: google.maps.MapTypeId.TERRAIN
+	};
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+	flightPath = new google.maps.Polyline({strokeColor: "#F00", strokeWeight: 2});
+
+	onHashChange();
 }
