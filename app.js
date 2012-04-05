@@ -35,6 +35,7 @@ app.post('/upload', routes.upload);
 app.get('/flush', routes.flush);
 app.get('/view/:id', routes.view);
 app.get('/get/rideList', routes.get.rideList);
+app.get('/get/ride/:id', routes.get.ride);
 
 var port = process.env.PORT || 3000;
 app.listen(port);

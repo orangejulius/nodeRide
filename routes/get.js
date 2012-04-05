@@ -12,3 +12,15 @@ exports.rideList = function(req, res){
 		}
 	});
 };
+
+// get a specific ride by id
+exports.ride = function(req, res){
+	redis.get(req.params.id, function(err, result) {
+		if (err) {
+			logule.error("Error getting ride with id "+req.params.id+": "+err);
+		} else {
+			logule.debug(result);
+			res.send(result);
+		}
+	});
+};
