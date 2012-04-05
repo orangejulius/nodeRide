@@ -1,3 +1,6 @@
+var map = null;
+var flightPath = null;
+
 function isValidCoord(value) {
 	if (value == 0)
 		return false;
@@ -16,7 +19,7 @@ function initialize() {
 	var myOptions = {
 		mapTypeId: google.maps.MapTypeId.TERRAIN
 	};
-	var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
 	var rideId = location.hash.substring(1);
 
@@ -35,7 +38,7 @@ function initialize() {
 			});
 		});
 
-		var flightPath = new google.maps.Polyline({
+		flightPath = new google.maps.Polyline({
 			path: pathCoordinates,
 			strokeColor: "#FF0000",
 			strokeOpacity: 1.0,
