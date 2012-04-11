@@ -59,7 +59,8 @@ function initialize() {
 		var myOptions = {
 			mapTypeId: google.maps.MapTypeId.TERRAIN
 		};
-		map = new google.maps.Map(canvas, myOptions);
+		//be sure to pass a normal DOM element to the google maps API
+		map = new google.maps.Map(canvas.get(0), myOptions);
 
 		flightPath = new google.maps.Polyline({strokeColor: "#F00", strokeWeight: 2});
 
