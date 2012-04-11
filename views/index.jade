@@ -6,6 +6,6 @@ append head
 append content
   .hero-unit
     h2 upload new ride
-    form(action='/upload', enctype='multipart/form-data', method='post')
-      input(type='file', name='upload', multiple='multiple')
-      input(type='submit')
+    form(enctype='multipart/form-data')
+      input(type='file', name='upload')
+      input(type='button', value='Upload')

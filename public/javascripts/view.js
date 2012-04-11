@@ -68,6 +68,19 @@ function initialize() {
 
 		$(window).bind('hashchange', onHashChange);
 	}
+
+	$(':button').click(function() {
+		var formData = new FormData($('form')[0]);
+		$.ajax({
+			url: '/upload',
+			type: 'POST',
+			error: function(err) { console.log('error: '); console.log(err);},
+			data: formData,
+			cache: false,
+			contentType: false,
+			processData: false
+		});
+	});
 }
 
 $(initialize);
