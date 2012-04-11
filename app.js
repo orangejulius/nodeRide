@@ -50,4 +50,4 @@ app.get('/get/ride/:id', routes.get.ride);
 
 var port = process.env.PORT || 3000;
 app.listen(port);
-console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
+console.log("Express server listening on port %d in %s mode", port, app.settings.env);
