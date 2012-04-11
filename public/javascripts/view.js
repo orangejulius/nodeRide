@@ -50,19 +50,23 @@ function onHashChange() {
 	updateRide(rideId);
 }
 
-$(window).bind('hashchange', onHashChange);
-
 function initialize() {
 	updateRideList();
 
-	var myOptions = {
-		mapTypeId: google.maps.MapTypeId.TERRAIN
-	};
-	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+	//only initialize the map if the map div exists
+	var canvas = $('#map_canvas');
+	if (canvas.length) {
+		var myOptions = {
+			mapTypeId: google.maps.MapTypeId.TERRAIN
+		};
+		map = new google.maps.Map(canvas, myOptions);
 
-	flightPath = new google.maps.Polyline({strokeColor: "#F00", strokeWeight: 2});
+		flightPath = new google.maps.Polyline({strokeColor: "#F00", strokeWeight: 2});
 
-	onHashChange();
+		onHashChange();
+
+		$(window).bind('hashchange', onHashChange);
+	}
 }
 
 $(initialize);
