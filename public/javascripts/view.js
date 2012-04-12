@@ -11,6 +11,8 @@ function isValidCoord(value) {
 
 function updateRideList() {
 	$.getJSON('/get/rideList', function(data) {
+		$('#rideList').empty();
+		$("<li class=\"nav-header\">existing rides</li>").appendTo('#rideList');
 		data.sort();
 		$.each(data, function(i,item) {
 			$("<li><a href=\"/view/#"+item+"\">"+item+"</a></li>").appendTo('#rideList');
