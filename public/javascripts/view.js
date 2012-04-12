@@ -55,6 +55,8 @@ function onHashChange() {
 function initialize() {
 	updateRideList();
 
+	setInterval("updateRideList()", 2000);
+
 	//only initialize the map if the map div exists
 	var canvas = $('#map_canvas');
 	if (canvas.length) {
