@@ -1,8 +1,8 @@
 var readTCX = require('../core/readTCX.js');
 var logule = require('logule');
+var format = require('util').format;
 
 module.exports = function(req, res){
-	var format = require('util').format;
 	readTCX(req.files.upload.path, function(result) {
 		res.send(format('\nuploaded %s (%d Kb) to %s as %s'
 		  , req.files.upload.name
