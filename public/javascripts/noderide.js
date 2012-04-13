@@ -40,14 +40,13 @@ function updateRideList(data) {
 function initializeNodeRide() {
 	checkRideList();
 
-	setInterval("checkRideList()", 2000);
-
 	$(':button').click(function() {
 		var formData = new FormData($('form')[0]);
 		$.ajax({
 			url: '/upload',
 			type: 'POST',
 			error: function(err) { console.log('error: '); console.log(err);},
+			success: function() {checkRideList();},
 			data: formData,
 			cache: false,
 			contentType: false,
