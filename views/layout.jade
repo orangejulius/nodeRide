@@ -23,6 +23,8 @@ html
                ul.nav.nav-list
                  li.nav-header
                    a#uploadLink upload new ride
+                   form(enctype='multipart/form-data', style='display:none')
+                     input(type='file', name='upload')
 
         .span9
           block content
