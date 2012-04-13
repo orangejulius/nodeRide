@@ -40,7 +40,11 @@ function updateRideList(data) {
 function initializeNodeRide() {
 	checkRideList();
 
-	$(':button').click(function() {
+	$('#uploadLink').click(function() {
+		$('input[type=file]').click();
+	});
+
+	$('input[type=file]').change(function() {
 		var formData = new FormData($('form')[0]);
 		$.ajax({
 			url: '/upload',
