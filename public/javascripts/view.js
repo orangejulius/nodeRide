@@ -9,28 +9,44 @@ function isValidCoord(value) {
 	return true;
 }
 
-function updateRide(rideId) {
-	$.getJSON('/get/ride/'+rideId, function(data) {
-		var pathCoordinates = [];
-		var bounds = new google.maps.LatLngBounds();
-		data.laps.forEach(function(lap) {
-			lap.tracks.forEach(function(track) {
-				track.forEach(function(trackpoint) {
-					var newLatLng = new google.maps.LatLng(trackpoint.lat, trackpoint.lon);
-					if (isValidCoord(trackpoint.lat) && isValidCoord(trackpoint.lon)) {
-						pathCoordinates.push(newLatLng);
-						bounds.extend(newLatLng);
-					}
-				});
+function parseRide(data) {
+	var ride = {};
+	ride.elevation = [];
+	ride.path = [];
+
+	var i = 0;
+	data.laps.forEach(function(lap) {
+		lap.tracks.forEach(function(track) {
+			track.forEach(function(trackpoint) {
+				var newLatLng = new google.maps.LatLng(trackpoint.lat, trackpoint.lon);
+				if (isValidCoord(trackpoint.lat) && isValidCoord(trackpoint.lon)) {
+					ride.path.push(newLatLng);
+				}
+				ride.elevation.push([i, trackpoint.alt]);
+
+				i++;
 			});
 		});
+	});
 
-		flightPath.setPath(pathCoordinates);
+	return ride;
+}
+
+function updateRide(rideId) {
+	$.getJSON('/get/ride/'+rideId, function(data) {
+		var ride = parseRide(data);
+		var bounds = new google.maps.LatLngBounds();
+
+		ride.path.forEach(function(latLng) {
+			bounds.extend(latLng);
+		});
+
+		flightPath.setPath(ride.path);
 
 		flightPath.setMap(map);
 		map.fitBounds(bounds);
 
-		updatePlot(data);
+		updatePlot(ride);
 	});
 }
 
@@ -62,18 +78,7 @@ function initializeMap() {
 }
 
 function updatePlot(rideData) {
-	var elevation = [];
-	var i = 0;
-	rideData.laps.forEach(function(lap) {
-		lap.tracks.forEach(function(track) {
-			track.forEach(function(trackpoint) {
-				elevation.push([i, trackpoint.alt]);
-				i++;
-			});
-		});
-	});
-
-	$.plot($("#plot"), [ elevation ]);
+	$.plot($("#plot"), [ rideData.elevation ]);
 }
 
 $(initializeMap);
