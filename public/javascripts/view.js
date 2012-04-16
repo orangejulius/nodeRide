@@ -80,7 +80,10 @@ function initializeMap() {
 }
 
 function updatePlot(rideData) {
-	$.plot($("#plot"), [ rideData.elevation ]);
+	var options = {
+		xaxis: { mode: "time" }
+	}
+	$.plot($("#plot"), [ rideData.elevation ], options);
 }
 
 $(initializeMap);
