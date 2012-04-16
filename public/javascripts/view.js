@@ -22,7 +22,9 @@ function parseRide(data) {
 				if (isValidCoord(trackpoint.lat) && isValidCoord(trackpoint.lon)) {
 					ride.path.push(newLatLng);
 				}
-				ride.elevation.push([i, trackpoint.alt]);
+				var date = new Date(trackpoint.time);
+
+				ride.elevation.push([date.getTime(), trackpoint.alt]);
 
 				i++;
 			});
