@@ -7,6 +7,16 @@ a {
   color: #00B7FF;
 }
 
+#map_canvas {
+	width: 100%;
+	height: 400px;
+}
+
+#plot {
+	width: 100%;
+	height: 200px;
+}
+
 .map-header {
 	margin-top: -20px;
 }
