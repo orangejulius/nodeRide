@@ -3,13 +3,13 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-      "express": "2.5.8"
-    ,  "connect": "2.0.3"
+      "express": "3.1.0"
+    ,  "connect": "2.7.3"
     , "jade": ">= 0.0.1"
-    , "redis": "0.7.1"
-    , "libxmljs": "0.5.4"
+    , "redis": "0.8.2"
+    , "libxmljs": "0.7.1"
     , "redis-url": "0.1.0"
-    , "logule": "0.6.1"
+    , "logule": "2.0.0"
   }
   , "engines": {
       "node": "0.6.14"
