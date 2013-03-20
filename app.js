@@ -7,7 +7,7 @@ var express = require('express')
   , routes = require('./routes');
 var connect = require('connect');
 
-var app = module.exports = express.createServer();
+var app = express();//module.exports = express.createServer();
 
 // Configuration
 
