@@ -1,4 +1,4 @@
-var logule = require('logule');
+var logule = require('logule').init(module);
 var redis = require('../core/redis.js');
 
 // get the list of all ride ids

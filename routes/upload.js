@@ -1,5 +1,5 @@
 var readTCX = require('../core/readTCX.js');
-var logule = require('logule');
+var logule = require('logule').init(module);
 var format = require('util').format;
 
 module.exports = function(req, res){
