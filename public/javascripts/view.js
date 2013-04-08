@@ -14,7 +14,6 @@ function parseRide(data) {
 	ride.elevation = [];
 	ride.path = [];
 
-	var i = 0;
 	data.laps.forEach(function(lap) {
 		lap.tracks.forEach(function(track) {
 			track.forEach(function(trackpoint) {
@@ -25,8 +24,6 @@ function parseRide(data) {
 				var date = new Date(trackpoint.time);
 
 				ride.elevation.push([date.getTime(), trackpoint.alt]);
-
-				i++;
 			});
 		});
 	});
