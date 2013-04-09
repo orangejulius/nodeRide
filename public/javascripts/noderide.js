@@ -25,12 +25,10 @@ NodeRide.RideList.prototype = {
 	checkRideList: function() {
 		var that = this;
 		$.getJSON('/get/rideList', function(data) {
-			if (that.rideList && that.compare(data, that.rideList) == false) {
+			if (that.rideList == null || that.compare(data, that.rideList) == false) {
 				that.updateRideList(data);
-			} else {
-				that.updateRideList(data);
+				that.rideList = data;
 			}
-			that.rideList = data;
 		});
 	},
 
