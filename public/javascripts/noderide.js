@@ -1,7 +1,7 @@
 var NodeRide = {
 	RideList: function() {
 		this.initialize();
-	},
+	}
 };
 
 NodeRide.RideList.prototype = {
@@ -25,7 +25,7 @@ NodeRide.RideList.prototype = {
 	checkRideList: function() {
 		var that = this;
 		$.getJSON('/get/rideList', function(data) {
-			if (that.rideList == null || that.compare(data, that.rideList) == false) {
+			if (that.rideList === null || that.compare(data, that.rideList) === false) {
 				that.updateRideList(data);
 				that.rideList = data;
 			}
@@ -64,7 +64,7 @@ NodeRide.RideList.prototype = {
 			});
 		});
 	}
-}
+};
 
 $(document).ready(function() {
 	NodeRide.ridelist = new NodeRide.RideList();
