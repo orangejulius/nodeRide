@@ -3,8 +3,8 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes');
+var express = require('express');
+var routes = require('./routes');
 var connect = require('connect');
 
 var app = express();//module.exports = express.createServer();
@@ -13,30 +13,31 @@ var app = express();//module.exports = express.createServer();
 
 //function to filter which responses have compression enabled
 //currently only enabled for json and html
-var filter = function(req, res) {
-	if (!process.env.ENABLE_COMPRESSION)
+var filter = function (req, res) {
+	if (!process.env.ENABLE_COMPRESSION) {
 		return false;
+	}
 	var type = res.getHeader('Content-Type') || '';
-	return type.match(/json|html/) != null;
+	return type.match(/json|html/) !== null;
 };
 
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
-  app.set('view options', { layout: false});
-  app.use(connect.compress({filter: filter}));
-  app.use(express.bodyParser());
-  app.use(express.methodOverride());
-  app.use(app.router);
-  app.use(express.static(__dirname + '/public'));
+app.configure(function () {
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.set('view options', { layout: false});
+    app.use(connect.compress({filter: filter}));
+    app.use(express.bodyParser());
+    app.use(express.methodOverride());
+    app.use(app.router);
+    app.use(express.static(__dirname + '/public'));
 });
 
-app.configure('development', function(){
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+app.configure('development', function () {
+    app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 });
 
-app.configure('production', function(){
-  app.use(express.errorHandler());
+app.configure('production', function () {
+    app.use(express.errorHandler());
 });
 
 // Routes
